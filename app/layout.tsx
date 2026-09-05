@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "ApplyTailor — Tailored resume bullets in minutes",
   description:
-    "Paste a job posting URL, pay $5 once, and get tailored resume bullets plus a short cover note.",
+    "Paste a job posting URL, pay $12 once, and get tailored resume bullets plus a short cover note.",
 };
 
 export default function RootLayout({
