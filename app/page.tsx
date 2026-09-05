@@ -64,7 +64,7 @@ export default function HomePage() {
       </section>
 
       <footer className="border-t border-[#1e2638] pt-6 text-sm text-[#6b7388]">
-        ApplyTailor · sandbox Stripe · demo OpenAI fallback when no API key
+        ApplyTailor · live Stripe · demo OpenAI fallback when no API key
       </footer>
     </main>
   );
