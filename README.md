@@ -95,8 +95,8 @@ For local development or testing, you may use:
 
 ```bash
 STRIPE_SECRET_KEY=sk_live_YOUR_LIVE_SECRET_KEY_HERE
-STRIPE_PRICE_ID=price_1UCPt37pd3R2ckxORRZN5wdj
-NEXT_PUBLIC_STRIPE_PAYMENT_LINK=https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00
+STRIPE_PRICE_ID=price_1UCQuU7pd3R2ckxOPSVh7RrP
+NEXT_PUBLIC_STRIPE_PAYMENT_LINK=https://buy.stripe.com/dRmaERaHe288a66bvweUU0b
 NEXT_PUBLIC_APP_URL=https://YOUR_DOMAIN_HERE.vercel.app
 OPENAI_API_KEY=sk-proj-YOUR_OPENAI_KEY_HERE
 ```
@@ -123,7 +123,7 @@ Your app should now be live with working Stripe Checkout!
 2. Paste a job posting URL (e.g., from Greenhouse, Lever, Ashby)
 3. Paste your resume text
 4. Click **Generate free preview** → should show blurred output
-5. Click **Tailor my resume — $5** → should redirect to Stripe Checkout
+5. Click **Tailor my resume — $12** → should redirect to Stripe Checkout
 6. Complete test payment (use Stripe test card: `4242 4242 4242 4242`, any future expiry, any CVC)
 7. Should redirect to `/success` with verified payment
 8. Return to home and generate again → output should be unblurred
@@ -155,17 +155,17 @@ applytailor/
 
 ### Price & Product Setup
 
-The live Stripe Price ID `price_1UCPt37pd3R2ckxORRZN5wdj` should be configured in your Stripe Dashboard:
+The live Stripe Price ID `price_1UCQuU7pd3R2ckxOPSVh7RrP` should be configured in your Stripe Dashboard:
 
 - **Product Name:** Resume Tailor
-- **Price:** $5.00 USD
+- **Price:** $12.00 USD
 - **Type:** One-time payment
 
 ### Payment Link Fallback
 
 If `STRIPE_SECRET_KEY` is not set or Checkout Session creation fails, the app falls back to the Payment Link:
 
-`https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00`
+`https://buy.stripe.com/dRmaERaHe288a66bvweUU0b`
 
 This ensures users can always pay, even if the API integration has issues.
 
