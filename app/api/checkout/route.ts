@@ -72,12 +72,6 @@ export async function POST(req: NextRequest) {
         client_session: clientSessionId,
         created_at: timestamp,
       },
-      custom_text: {
-        submit: {
-          message:
-            "You'll receive instant access to your tailored resume bullets and cover note.",
-        },
-      },
     });
 
     if (!session.url) {
