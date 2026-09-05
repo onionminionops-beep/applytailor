@@ -1,132 +1,155 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const UNLOCK_KEY = "applytailor_unlocked";
-const RESULT_KEY = "applytailor:result";
 
-type TailorResult = {
-  mode: "openai" | "demo";
-  bullets: string[];
-  coverNote: string;
-  jobSummary: string;
-};
-
-export default function SuccessPage() {
-  const [result, setResult] = useState<TailorResult | null>(null);
-  const [ready, setReady] = useState(false);
-  const [copied, setCopied] = useState(false);
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+  const [verifying, setVerifying] = useState(!!sessionId);
+  const [verified, setVerified] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      sessionStorage.setItem(UNLOCK_KEY, "1");
-      const raw = sessionStorage.getItem(RESULT_KEY);
-      if (raw) setResult(JSON.parse(raw) as TailorResult);
-    } catch {
-      /* ignore */
-    }
-    setReady(true);
-  }, []);
+    const markUnlocked = () => {
+      try {
+        sessionStorage.setItem(UNLOCK_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    };
 
-  const copyAll = async () => {
-    if (!result) return;
-    const text = [
-      "JOB SUMMARY",
-      result.jobSummary,
-      "",
-      "RESUME BULLETS",
-      ...result.bullets.map((b, i) => `${i + 1}. ${b}`),
-      "",
-      "COVER NOTE",
-      result.coverNote,
-    ].join("\n");
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
+    if (!sessionId) {
+      markUnlocked();
+      setVerifying(false);
+      return;
     }
-  };
+
+    let mounted = true;
+
+    async function verifySession() {
+      try {
+        const res = await fetch(`/api/verify-session?session_id=${sessionId}`);
+        if (!mounted) return;
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.paid) {
+            setVerified(true);
+            markUnlocked();
+          } else {
+            setError("Payment not confirmed. Please contact support.");
+          }
+        } else {
+          const data = await res.json().catch(() => ({}));
+          setError(
+            data.error ||
+              "Unable to verify payment. Your session is unlocked as a courtesy."
+          );
+          markUnlocked();
+        }
+      } catch (err) {
+        if (!mounted) return;
+        console.error("Session verification failed", err);
+        setError("Verification unavailable. Your session is unlocked as a courtesy.");
+        markUnlocked();
+      } finally {
+        if (mounted) setVerifying(false);
+      }
+    }
+
+    verifySession();
+
+    return () => {
+      mounted = false;
+    };
+  }, [sessionId]);
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-10 sm:px-6 sm:py-16">
-      <header className="space-y-3 text-center sm:text-left">
-        <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-200">
-          Payment received
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-[#eef2ff] sm:text-4xl">
-          Your tailored resume is unlocked
-        </h1>
-        <p className="text-[#9aa3b8]">
-          Copy the bullets and cover note into your application. Thanks for using
-          ApplyTailor.
-        </p>
-      </header>
-
-      {!ready ? (
-        <p className="text-sm text-[#9aa3b8]">Loading…</p>
-      ) : result ? (
-        <section className="space-y-5 rounded-2xl border border-[#1e2638] bg-[#101522]/90 p-5 sm:p-7">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="text-xs uppercase tracking-wider text-[#9aa3b8]">
-              {result.mode === "demo" ? "DEMO output" : "AI tailored"}
-            </span>
-            <button
-              type="button"
-              onClick={copyAll}
-              className="rounded-lg border border-[#1e2638] bg-[#151b2b] px-3 py-1.5 text-sm font-medium text-[#eef2ff] hover:border-[#6ee7b7]/50"
-            >
-              {copied ? "Copied!" : "Copy all"}
-            </button>
-          </div>
-
-          <div>
-            <h2 className="mb-1 text-sm font-medium text-[#6ee7b7]">Job summary</h2>
-            <p className="text-sm leading-relaxed text-[#e8edf8]">{result.jobSummary}</p>
-          </div>
-
-          <div>
-            <h2 className="mb-2 text-sm font-medium text-[#6ee7b7]">Resume bullets</h2>
-            <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#e8edf8]">
-              {result.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="mb-1 text-sm font-medium text-[#38bdf8]">Cover note</h2>
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-[#e8edf8]">
-              {result.coverNote}
+    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center gap-6 px-4 py-16">
+      <div className="rounded-2xl border border-[#1e2638] bg-[#101522]/90 p-8 text-center shadow-xl">
+        {verifying ? (
+          <>
+            <div className="mb-4 flex justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#6ee7b7] border-t-transparent" />
+            </div>
+            <h1 className="text-xl font-semibold text-[#eef2ff]">
+              Verifying payment...
+            </h1>
+            <p className="mt-2 text-sm text-[#9aa3b8]">
+              This should only take a moment.
             </p>
-          </div>
-        </section>
-      ) : (
-        <section className="space-y-4 rounded-2xl border border-[#1e2638] bg-[#101522]/90 p-5 sm:p-7">
-          <h2 className="text-lg font-semibold text-[#eef2ff]">No saved preview found</h2>
-          <p className="text-sm text-[#9aa3b8]">
-            We couldn&apos;t find a tailored result in this browser (session storage
-            may have been cleared, or payment opened in another tab). Go back home,
-            generate a preview again — it will show unlocked for this session — or
-            re-paste your resume and job URL.
-          </p>
-          <Link
-            href="/#tailor"
-            className="inline-flex rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-5 py-3 text-sm font-semibold text-[#041016]"
-          >
-            Back to ApplyTailor
-          </Link>
-        </section>
-      )}
+          </>
+        ) : (
+          <>
+            <div className="mb-4 flex justify-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#6ee7b7]/20">
+                <svg
+                  className="h-6 w-6 text-[#6ee7b7]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </div>
+            <p className="mb-2 text-sm font-medium text-[#6ee7b7]">
+              {verified ? "Payment verified" : "Payment received"}
+            </p>
+            <h1 className="text-2xl font-semibold text-[#eef2ff]">You are unlocked</h1>
+            {error ? (
+              <div className="mt-4 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3">
+                <p className="text-sm text-amber-100">{error}</p>
+              </div>
+            ) : (
+              <p className="mt-3 text-sm leading-relaxed text-[#9aa3b8]">
+                Thanks for supporting ApplyTailor. Head back home and generate again —
+                your preview will show in the clear for this browser session.
+              </p>
+            )}
+            <Link
+              href="/#tailor"
+              className="mt-6 inline-flex rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-5 py-3 text-sm font-semibold text-[#041016] transition hover:opacity-95"
+            >
+              Back to tailor
+            </Link>
+          </>
+        )}
+      </div>
 
-      <Link
-        href="/#tailor"
-        className="text-center text-sm text-[#9aa3b8] underline-offset-4 hover:underline sm:text-left"
-      >
-        Tailor another application →
-      </Link>
+      {sessionId && !verifying && (
+        <p className="text-center text-xs text-[#6b7388]">
+          Session ID: {sessionId.slice(0, 20)}...
+        </p>
+      )}
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center gap-6 px-4 py-16">
+          <div className="rounded-2xl border border-[#1e2638] bg-[#101522]/90 p-8 text-center shadow-xl">
+            <div className="mb-4 flex justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#6ee7b7] border-t-transparent" />
+            </div>
+            <h1 className="text-xl font-semibold text-[#eef2ff]">Loading...</h1>
+          </div>
+        </main>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
   );
 }
