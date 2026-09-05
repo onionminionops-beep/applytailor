@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Tailor Resume to Job Description — ApplyTailor ($5)",
+  title: "Tailor Resume to Job Description — ApplyTailor ($12)",
   description:
-    "Instantly tailor your resume to any job description. Paste the job posting and your resume, get perfectly matched bullet points for $5 — no subscription.",
+    "Instantly tailor your resume to any job description. Paste the job posting and your resume, get perfectly matched bullet points for $12 — no subscription.",
 };
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function TailorResumeToJobDescriptionPage() {
   return (
@@ -17,7 +17,7 @@ export default function TailorResumeToJobDescriptionPage() {
       <header className="space-y-5">
         <p className="inline-flex items-center gap-2 rounded-full border border-[#1e2638] bg-[#101522]/80 px-3 py-1 text-xs font-medium text-[#9aa3b8]">
           <span className="h-1.5 w-1.5 rounded-full bg-[#6ee7b7]" />
-          One-time payment · $5 · No subscription
+          One-time payment · $12 · No subscription
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-[#eef2ff] sm:text-5xl sm:leading-[1.1]">
           Tailor Your Resume to{" "}
@@ -37,7 +37,7 @@ export default function TailorResumeToJobDescriptionPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-6 py-3 text-sm font-semibold text-[#041016] shadow-lg shadow-[#6ee7b7]/25 transition hover:shadow-xl hover:shadow-[#6ee7b7]/35"
           >
-            Get started — $5 →
+            Get started — $12 →
           </a>
           <Link
             href="/"
@@ -62,7 +62,7 @@ export default function TailorResumeToJobDescriptionPage() {
           },
           {
             title: "Download & Apply",
-            body: "Get tailored bullets and cover note instantly for $5",
+            body: "Get tailored bullets and cover note instantly for $12",
             icon: "🚀",
           },
         ].map(({ title, body, icon }) => (
@@ -94,7 +94,7 @@ export default function TailorResumeToJobDescriptionPage() {
           </p>
           <p className="leading-relaxed">
             <strong className="text-[#eef2ff]">One-time payment, no games.</strong>{" "}
-            $5 gets you the full tailored output. No monthly fees, no hidden upsells.
+            $12 gets you the full tailored output. No monthly fees, no hidden upsells.
           </p>
         </div>
       </section>
@@ -110,7 +110,7 @@ export default function TailorResumeToJobDescriptionPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-6 py-3 text-sm font-semibold text-[#041016] shadow-lg shadow-[#6ee7b7]/25 transition hover:shadow-xl hover:shadow-[#6ee7b7]/35"
           >
-            Pay $5 & Start Tailoring →
+            Pay $12 & Start Tailoring →
           </a>
           <Link
             href="/"

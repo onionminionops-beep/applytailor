@@ -1,7 +1,7 @@
 # ApplyTailor
 
 Paste a job posting URL and your resume text. Get tailored resume bullets plus a short cover note.
-Free blurred preview; unlock the full rewrite for $5 via Stripe Checkout.
+Free blurred preview; unlock the full rewrite for $12 via Stripe Checkout.
 
 **Public / production uses live Stripe.** Sandbox keys and test payment links are only for local or test.
 
@@ -42,8 +42,8 @@ These environment variables **must** be set for the production deployment on Ver
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `STRIPE_SECRET_KEY` | Your Stripe **live** secret key (starts with `sk_live_` or `rk_live_`). **Required** for Checkout Sessions. If unset, falls back to Payment Link. | `sk_live_51...` |
-| `STRIPE_PRICE_ID` | Stripe Price ID for the $5 resume tailor product. | `price_1UCPt37pd3R2ckxORRZN5wdj` |
-| `NEXT_PUBLIC_STRIPE_PAYMENT_LINK` | Fallback Stripe Payment Link URL. | `https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00` |
+| `STRIPE_PRICE_ID` | Stripe Price ID for the $12 resume tailor product. | `price_1UCQuU7pd3R2ckxOPSVh7RrP` |
+| `NEXT_PUBLIC_STRIPE_PAYMENT_LINK` | Fallback Stripe Payment Link URL. | `https://buy.stripe.com/dRmaERaHe288a66bvweUU0b` |
 | `NEXT_PUBLIC_APP_URL` | Your production site URL (no trailing slash). Used for Checkout redirects. | `https://applytailor.vercel.app` |
 
 ### Optional

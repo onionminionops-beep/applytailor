@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Paste Job URL & Resume — ApplyTailor ($5)",
+  title: "Paste Job URL & Resume — ApplyTailor ($12)",
   description:
-    "Paste any job URL and your resume text — get AI-tailored bullet points and cover note instantly for $5. No subscription, no hassle.",
+    "Paste any job URL and your resume text — get AI-tailored bullet points and cover note instantly for $12. No subscription, no hassle.",
 };
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function PasteJobUrlResumePage() {
   return (
@@ -17,7 +17,7 @@ export default function PasteJobUrlResumePage() {
       <header className="space-y-5">
         <p className="inline-flex items-center gap-2 rounded-full border border-[#1e2638] bg-[#101522]/80 px-3 py-1 text-xs font-medium text-[#9aa3b8]">
           <span className="h-1.5 w-1.5 rounded-full bg-[#6ee7b7]" />
-          Simple · Fast · $5 one-time
+          Simple · Fast · $12 one-time
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-[#eef2ff] sm:text-5xl sm:leading-[1.1]">
           Paste Job URL &{" "}
@@ -38,7 +38,7 @@ export default function PasteJobUrlResumePage() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-6 py-3 text-sm font-semibold text-[#041016] shadow-lg shadow-[#6ee7b7]/25 transition hover:shadow-xl hover:shadow-[#6ee7b7]/35"
           >
-            Start now — $5 →
+            Start now — $12 →
           </a>
           <Link
             href="/"
@@ -77,7 +77,7 @@ export default function PasteJobUrlResumePage() {
               3
             </span>
             <span>
-              <strong className="text-[#eef2ff]">Pay $5 once and download</strong> — 
+              <strong className="text-[#eef2ff]">Pay $12 once and download</strong> — 
               get tailored bullets + short cover note instantly
             </span>
           </li>
@@ -92,7 +92,7 @@ export default function PasteJobUrlResumePage() {
           <li className="flex gap-3">
             <span className="text-[#6ee7b7]">✓</span>
             <span>
-              <strong className="text-[#eef2ff]">No subscription.</strong> Pay $5 per job. 
+              <strong className="text-[#eef2ff]">No subscription.</strong> Pay $12 per job. 
               That's it.
             </span>
           </li>
@@ -124,7 +124,7 @@ export default function PasteJobUrlResumePage() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-6 py-3 text-sm font-semibold text-[#041016] shadow-lg shadow-[#6ee7b7]/25 transition hover:shadow-xl hover:shadow-[#6ee7b7]/35"
           >
-            Pay $5 & Start →
+            Pay $12 & Start →
           </a>
           <Link
             href="/"
