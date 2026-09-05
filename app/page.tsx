@@ -97,6 +97,27 @@ export default function HomePage() {
         <p className="mt-2 text-xs">
           {process.env.OPENAI_API_KEY ? "AI-powered generation" : "Demo mode active"}
         </p>
+        <div className="mt-4 flex items-center justify-center gap-4 opacity-70">
+          <a
+            href="https://fazier.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs hover:opacity-80"
+          >
+            Listed on Fazier
+          </a>
+          <a
+            href="https://thesaasdir.com/product/applytailor?ref=badge"
+            rel="dofollow"
+          >
+            <img
+              src="https://thesaasdir.com/badge/applytailor.svg"
+              alt="Featured on TheSaaSDir"
+              width={182}
+              height={46}
+            />
+          </a>
+        </div>
       </footer>
     </main>
   );
