@@ -4,11 +4,11 @@ import Stripe from "stripe";
 export const runtime = "nodejs";
 
 const PRICE_ID =
-  process.env.STRIPE_PRICE_ID || "price_1UCPqk6B4fGL0aZPJsXYNzS1";
+  process.env.STRIPE_PRICE_ID || "price_1UCPt37pd3R2ckxORRZN5wdj";
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/test_fZu14g8p3crqg9tf5f9EI00";
+  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
 
 function appUrl(req: NextRequest): string {
   const fromEnv = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
