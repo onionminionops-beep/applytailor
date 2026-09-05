@@ -13,7 +13,7 @@ const UNLOCK_KEY = "applytailor_unlocked";
 const RESULT_KEY = "applytailor:result";
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/test_fZu14g8p3crqg9tf5f9EI00";
 
 export default function TailorForm() {
   const [jobUrl, setJobUrl] = useState("");
