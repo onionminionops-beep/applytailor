@@ -1,22 +1,21 @@
 # ApplyTailor
 
-Paste job URL + resume. Get tailored bullets + cover note.
-Blurred preview free; unlock for $5 via Stripe sandbox Checkout.
+Paste job URL + resume. Tailored bullets + cover note for $5 (Stripe Checkout).
 
-## Setup
+## Live Stripe
 
-Copy env example, install packages, run Next.js dev server.
+- Price: price_1UCPt37pd3R2ckxORRZN5wdj
+- Product: prod_VCpY4fKCcP9fLw
+- Payment Link: see .env.example NEXT_PUBLIC_STRIPE_PAYMENT_LINK
 
-Sandbox Price ID: price_1UCPqk6B4fGL0aZPJsXYNzS1
-Sandbox Payment Link: https://buy.stripe.com/test_fZu14g8p3crqg9tf5f9EI00
+Sandbox keys only for local tests.
 
-## Routes
+## Vercel env vars
 
-- GET /
-- GET /success
-- POST /api/tailor
-- POST /api/checkout
+OPENAI_API_KEY, STRIPE_SECRET_KEY, STRIPE_PRICE_ID, NEXT_PUBLIC_STRIPE_PAYMENT_LINK, NEXT_PUBLIC_APP_URL
 
-## Deploy
+## Flow
 
-Push to main; configure env on Vercel.
+1. Free blurred preview (/api/tailor) stored in sessionStorage
+2. Unlock via /api/checkout
+3. /success shows full output

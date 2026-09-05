@@ -10,6 +10,7 @@ type TailorResult = {
 };
 
 const UNLOCK_KEY = "applytailor_unlocked";
+const RESULT_KEY = "applytailor:result";
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
   "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
@@ -56,6 +57,11 @@ export default function TailorForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Tailor failed");
       setResult(data as TailorResult);
+      try {
+        sessionStorage.setItem(RESULT_KEY, JSON.stringify(data));
+      } catch {
+        /* ignore */
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -66,6 +72,13 @@ export default function TailorForm() {
   async function onUnlock() {
     setPaying(true);
     setError(null);
+    if (result) {
+      try {
+        sessionStorage.setItem(RESULT_KEY, JSON.stringify(result));
+      } catch {
+        /* ignore */
+      }
+    }
     try {
       const res = await fetch("/api/checkout", { method: "POST" });
       const data = await res.json();
