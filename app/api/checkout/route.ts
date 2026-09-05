@@ -72,6 +72,9 @@ export async function POST(req: NextRequest) {
         client_session: clientSessionId,
         created_at: timestamp,
       },
+      managed_payments: {
+        enabled: false,
+      },
     });
 
     if (!session.url) {
