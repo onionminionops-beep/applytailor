@@ -13,7 +13,7 @@ const UNLOCK_KEY = "applytailor_unlocked";
 const RESULT_KEY = "applytailor:result";
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function TailorForm() {
   const [jobUrl, setJobUrl] = useState("");
@@ -156,7 +156,7 @@ export default function TailorForm() {
                 disabled={paying}
                 className="rounded-xl bg-[#eef2ff] px-4 py-2.5 text-sm font-semibold text-[#07090f] hover:bg-white"
               >
-                {paying ? "Redirecting..." : "Tailor my resume — $5"}
+                {paying ? "Redirecting..." : "Tailor my resume — $12"}
               </button>
             )}
           </div>
@@ -198,7 +198,7 @@ export default function TailorForm() {
                   <div className="max-w-sm rounded-2xl border border-[#2a3348] bg-[#0c1220]/95 p-5 text-center shadow-2xl">
                     <p className="mb-1 text-base font-semibold">Unlock full output</p>
                     <p className="mb-4 text-sm text-[#9aa3b8]">
-                      One-time $5 unlocks crisp bullets and your cover note for this run.
+                      One-time $12 unlocks crisp bullets and your cover note for this run.
                     </p>
                     <button
                       type="button"
@@ -206,7 +206,7 @@ export default function TailorForm() {
                       disabled={paying}
                       className="w-full rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-4 py-3 font-semibold text-[#041016]"
                     >
-                      {paying ? "Redirecting..." : "Tailor my resume — $5"}
+                      {paying ? "Redirecting..." : "Tailor my resume — $12"}
                     </button>
                     <a
                       href={PAYMENT_LINK}

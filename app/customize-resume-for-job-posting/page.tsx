@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Customize Resume for Job Posting — ApplyTailor ($5)",
+  title: "Customize Resume for Job Posting — ApplyTailor ($12)",
   description:
-    "Customize your resume to match any job posting perfectly. Paste the posting URL and your resume, get AI-tailored bullets and cover note for $5 — no subscription.",
+    "Customize your resume to match any job posting perfectly. Paste the posting URL and your resume, get AI-tailored bullets and cover note for $12 — no subscription.",
 };
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function CustomizeResumeForJobPostingPage() {
   return (
@@ -17,7 +17,7 @@ export default function CustomizeResumeForJobPostingPage() {
       <header className="space-y-5">
         <p className="inline-flex items-center gap-2 rounded-full border border-[#1e2638] bg-[#101522]/80 px-3 py-1 text-xs font-medium text-[#9aa3b8]">
           <span className="h-1.5 w-1.5 rounded-full bg-[#6ee7b7]" />
-          AI-powered · $5 one-time · Instant results
+          AI-powered · $12 one-time · Instant results
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-[#eef2ff] sm:text-5xl sm:leading-[1.1]">
           Customize Your Resume for{" "}
@@ -37,7 +37,7 @@ export default function CustomizeResumeForJobPostingPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-6 py-3 text-sm font-semibold text-[#041016] shadow-lg shadow-[#6ee7b7]/25 transition hover:shadow-xl hover:shadow-[#6ee7b7]/35"
           >
-            Customize now — $5 →
+            Customize now — $12 →
           </a>
           <Link
             href="/"
@@ -62,7 +62,7 @@ export default function CustomizeResumeForJobPostingPage() {
           },
           {
             title: "Apply with Confidence",
-            body: "Download tailored resume + cover note for $5",
+            body: "Download tailored resume + cover note for $12",
             icon: "💼",
           },
         ].map(({ title, body, icon }) => (
@@ -94,7 +94,7 @@ export default function CustomizeResumeForJobPostingPage() {
           </p>
           <p className="leading-relaxed">
             <strong className="text-[#eef2ff]">Transparent pricing.</strong>{" "}
-            $5 per job posting. No recurring charges. Get exactly what you pay for.
+            $12 per job posting. No recurring charges. Get exactly what you pay for.
           </p>
         </div>
       </section>
@@ -115,7 +115,7 @@ export default function CustomizeResumeForJobPostingPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-6 py-3 text-sm font-semibold text-[#041016] shadow-lg shadow-[#6ee7b7]/25 transition hover:shadow-xl hover:shadow-[#6ee7b7]/35"
           >
-            Pay $5 & Customize →
+            Pay $12 & Customize →
           </a>
           <Link
             href="/"

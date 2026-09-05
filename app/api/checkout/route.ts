@@ -4,11 +4,11 @@ import Stripe from "stripe";
 export const runtime = "nodejs";
 
 const PRICE_ID =
-  process.env.STRIPE_PRICE_ID || "price_1UCPt37pd3R2ckxORRZN5wdj";
+  process.env.STRIPE_PRICE_ID || "price_1UCQuU7pd3R2ckxOPSVh7RrP";
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 const INTEGRATION_ID = "applytlr_kjn82mpa";
 

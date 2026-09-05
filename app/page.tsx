@@ -2,7 +2,7 @@ import TailorForm from "./components/TailorForm";
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function HomePage() {
   return (
@@ -10,7 +10,7 @@ export default function HomePage() {
       <header className="space-y-5">
         <p className="inline-flex items-center gap-2 rounded-full border border-[#1e2638] bg-[#101522]/80 px-3 py-1 text-xs font-medium text-[#9aa3b8]">
           <span className="h-1.5 w-1.5 rounded-full bg-[#6ee7b7]" />
-          One-shot resume tailor · $5 · No subscription
+          One-shot resume tailor · $12 · No subscription
         </p>
         <h1 className="text-3xl font-semibold tracking-tight text-[#eef2ff] sm:text-5xl sm:leading-[1.1]">
           Turn a job link into{" "}
@@ -21,14 +21,14 @@ export default function HomePage() {
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-[#9aa3b8] sm:text-lg">
           Paste the posting URL and your resume. Get a free blurred preview, then unlock
-          the full rewrite for five dollars — no subscription, no account required.
+          the full rewrite for twelve dollars — no subscription, no account required.
         </p>
         <div className="flex flex-wrap gap-3">
           <a
             href="#tailor"
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-5 py-3 text-sm font-semibold text-[#041016] transition hover:opacity-95"
           >
-            Tailor my resume — $5
+            Tailor my resume — $12
           </a>
           <a
             href={PAYMENT_LINK}
@@ -45,7 +45,7 @@ export default function HomePage() {
         {[
           ["1. Paste", "Job URL + resume text"],
           ["2. Preview", "Free blurred preview"],
-          ["3. Unlock", "$5 one-time payment"],
+          ["3. Unlock", "$12 one-time payment"],
         ].map(([title, body]) => (
           <div
             key={title}
@@ -78,7 +78,7 @@ export default function HomePage() {
             blurred version of your tailored bullets and cover note instantly.
           </p>
           <p>
-            <span className="font-medium text-[#c7d0e4]">One-time payment:</span> Pay $5
+            <span className="font-medium text-[#c7d0e4]">One-time payment:</span> Pay $12
             once via Stripe Checkout to unlock the full, crisp output.
           </p>
           <p>
