@@ -8,3 +8,4 @@
 .env*
 !.env.example
 *.tsbuildinfo
+next-env.d.ts

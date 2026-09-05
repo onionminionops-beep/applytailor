@@ -15,13 +15,13 @@ function demoResult(jobText: string, resumeText: string): TailorResult {
 
   return {
     mode: "demo",
-    jobSummary: `DEMO summary based on fetched posting (starts with: "${firstLine}…")`,
+    jobSummary: `DEMO summary based on fetched posting (starts with: "${firstLine}...")`,
     bullets: [
-      `Aligned delivery with role needs around ${firstLine.toLowerCase().slice(0, 60)}…, translating requirements into measurable outcomes.`,
+      `Aligned delivery with role needs around ${firstLine.toLowerCase().slice(0, 60)}..., translating requirements into measurable outcomes.`,
       `Leveraged ${resumeHint} to ship cross-functional work that maps directly to the posting's stated priorities.`,
       "Owned end-to-end execution: scoped work, partnered with stakeholders, and shipped on a clear timeline.",
       "Quantified impact with metrics (conversion, latency, retention, or revenue) tailored to the job's success criteria.",
-      "Communicated tradeoffs clearly and iterated from feedback—ready to contribute from week one.",
+      "Communicated tradeoffs clearly and iterated from feedback — ready to contribute from week one.",
     ],
     coverNote:
       "I'm excited about this role and have tailored my experience to the posting's priorities. I'd welcome a chance to share how I can contribute quickly and measurably. (DEMO — set OPENAI_API_KEY for live generation.)",

@@ -10,10 +10,9 @@ type TailorResult = {
 };
 
 const UNLOCK_KEY = "applytailor_unlocked";
-const RESULT_KEY = "applytailor:result";
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/test_fZu14g8p3crqg9tf5f9EI00";
 
 export default function TailorForm() {
   const [jobUrl, setJobUrl] = useState("");
@@ -57,11 +56,6 @@ export default function TailorForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Tailor failed");
       setResult(data as TailorResult);
-      try {
-        sessionStorage.setItem(RESULT_KEY, JSON.stringify(data));
-      } catch {
-        /* ignore */
-      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -72,18 +66,10 @@ export default function TailorForm() {
   async function onUnlock() {
     setPaying(true);
     setError(null);
-    if (result) {
-      try {
-        sessionStorage.setItem(RESULT_KEY, JSON.stringify(result));
-      } catch {
-        /* ignore */
-      }
-    }
     try {
       const res = await fetch("/api/checkout", { method: "POST" });
       const data = await res.json();
-      const url = data.url || PAYMENT_LINK;
-      window.location.href = url;
+      window.location.href = data.url || PAYMENT_LINK;
     } catch {
       window.location.href = PAYMENT_LINK;
     } finally {
@@ -102,21 +88,19 @@ export default function TailorForm() {
             placeholder="https://boards.greenhouse.io/..."
             value={jobUrl}
             onChange={(e) => setJobUrl(e.target.value)}
-            className="w-full rounded-xl border border-[#1e2638] bg-[#0c1220] px-4 py-3 text-[#eef2ff] outline-none focus:ring-2 focus:ring-[#6ee7b7]"
+            className="w-full rounded-xl border border-[#1e2638] bg-[#0c1220] px-4 py-3 text-[#eef2ff] outline-none ring-[#6ee7b7]/focus:ring-2"
           />
         </label>
 
         <label className="block space-y-2">
-          <span className="text-sm font-medium text-[#c7d0e4]">
-            Paste your resume text
-          </span>
+          <span className="text-sm font-medium text-[#c7d0e4]">Paste your resume text</span>
           <textarea
             required
             rows={10}
-            placeholder="Paste the experience bullets and skills you want tailored..."
+            placeholder="Paste experience bullets and skills..."
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
-            className="w-full resize-y rounded-xl border border-[#1e2638] bg-[#0c1220] px-4 py-3 text-[#eef2ff] outline-none focus:ring-2 focus:ring-[#6ee7b7]"
+            className="w-full resize-y rounded-xl border border-[#1e2638] bg-[#0c1220] px-4 py-3 text-[#eef2ff] outline-none ring-[#6ee7b7]/focus:ring-2"
           />
         </label>
 
@@ -172,7 +156,7 @@ export default function TailorForm() {
                 className={
                   unlocked
                     ? "space-y-4"
-                    : "space-y-4 select-none blur-[6px] pointer-events-none"
+                    : "pointer-events-none space-y-4 select-none blur-[6px]"
                 }
                 aria-hidden={!unlocked}
               >
@@ -201,8 +185,7 @@ export default function TailorForm() {
                   <div className="max-w-sm rounded-2xl border border-[#2a3348] bg-[#0c1220]/95 p-5 text-center shadow-2xl">
                     <p className="mb-1 text-base font-semibold">Unlock full output</p>
                     <p className="mb-4 text-sm text-[#9aa3b8]">
-                      One-time $5 unlocks crisp bullets and your cover note for this
-                      run.
+                      One-time $5 unlocks crisp bullets and your cover note for this run.
                     </p>
                     <button
                       type="button"

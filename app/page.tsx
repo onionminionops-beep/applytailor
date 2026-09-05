@@ -2,7 +2,7 @@ import TailorForm from "./components/TailorForm";
 
 const PAYMENT_LINK =
   process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK ||
-  "https://buy.stripe.com/6oU9AN16E4gg7XY578eUU00";
+  "https://buy.stripe.com/test_fZu14g8p3crqg9tf5f9EI00";
 
 export default function HomePage() {
   return (
@@ -64,7 +64,7 @@ export default function HomePage() {
       </section>
 
       <footer className="border-t border-[#1e2638] pt-6 text-sm text-[#6b7388]">
-        ApplyTailor · live Stripe Checkout · demo OpenAI fallback when no API key
+        ApplyTailor · sandbox Stripe · demo OpenAI fallback when no API key
       </footer>
     </main>
   );
