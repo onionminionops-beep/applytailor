@@ -81,8 +81,8 @@ export default function TailorForm() {
       }
     }
     try {
-      const res = await posthog.capture("checkout_cta_clicked", { product: "ApplyTailor" });
-      fetch("/api/checkout", { method: "POST" });
+      posthog.capture("checkout_cta_clicked", { product: "ApplyTailor" });
+      const res = await fetch("/api/checkout", { method: "POST" });
       const data = await res.json();
       window.location.href = data.url || PAYMENT_LINK;
     } catch {
