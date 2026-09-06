@@ -1,3 +1,6 @@
+"use client";
+
+import { usePostHog } from "posthog-js/react";
 import TailorForm from "./components/TailorForm";
 
 const PAYMENT_LINK =
@@ -5,6 +8,24 @@ const PAYMENT_LINK =
   "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function HomePage() {
+  const posthog = usePostHog();
+
+  const handleTailorClick = () => {
+    posthog?.capture("payment_cta_click", {
+      product: "applytailor",
+      cta_type: "scroll_to_form",
+      location: "hero",
+    });
+  };
+
+  const handlePaymentLinkClick = () => {
+    posthog?.capture("payment_cta_click", {
+      product: "applytailor",
+      cta_type: "stripe_payment_link",
+      location: "hero",
+    });
+  };
+
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-4 py-10 sm:px-6 sm:py-16">
       <header className="space-y-5">
@@ -26,12 +47,14 @@ export default function HomePage() {
         <div className="flex flex-wrap gap-3">
           <a
             href="#tailor"
+            onClick={handleTailorClick}
             className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#6ee7b7] to-[#38bdf8] px-5 py-3 text-sm font-semibold text-[#041016] transition hover:opacity-95"
           >
             Tailor my resume — $12
           </a>
           <a
             href={PAYMENT_LINK}
+            onClick={handlePaymentLinkClick}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-xl border border-[#2a3348] bg-[#101522] px-5 py-3 text-sm font-semibold text-[#eef2ff] transition hover:border-[#3a4358]"

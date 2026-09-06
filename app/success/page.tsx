@@ -3,17 +3,24 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { usePostHog } from "posthog-js/react";
 
 const UNLOCK_KEY = "applytailor_unlocked";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
+  const posthog = usePostHog();
   const sessionId = searchParams.get("session_id");
   const [verifying, setVerifying] = useState(!!sessionId);
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    posthog?.capture("payment_success", {
+      product: "applytailor",
+      session_id: sessionId || undefined,
+    });
+
     const markUnlocked = () => {
       try {
         sessionStorage.setItem(UNLOCK_KEY, "1");
@@ -66,7 +73,7 @@ function SuccessContent() {
     return () => {
       mounted = false;
     };
-  }, [sessionId]);
+  }, [sessionId, posthog]);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center gap-6 px-4 py-16">

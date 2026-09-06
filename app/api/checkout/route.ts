@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { PostHog } from "posthog-node";
 
 export const runtime = "nodejs";
 
@@ -11,6 +12,23 @@ const PAYMENT_LINK =
   "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 const INTEGRATION_ID = "applytlr_kjn82mpa";
+
+const POSTHOG_KEY =
+  process.env.NEXT_PUBLIC_POSTHOG_KEY ||
+  "phc_yRSKUoUhg56ijGwnZCJhPH3ozSQSv2YnLQx5RYp6fUVy";
+const POSTHOG_HOST =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
+
+let posthogClient: PostHog | null = null;
+
+function getPostHogClient(): PostHog {
+  if (!posthogClient) {
+    posthogClient = new PostHog(POSTHOG_KEY, {
+      host: POSTHOG_HOST,
+    });
+  }
+  return posthogClient;
+}
 
 function appUrl(req: NextRequest): string {
   const fromEnv = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
@@ -33,6 +51,9 @@ function generateSessionId(): string {
 }
 
 export async function POST(req: NextRequest) {
+  const posthog = getPostHogClient();
+  const distinctId = req.headers.get("x-forwarded-for") || "anonymous";
+
   try {
     const secret = process.env.STRIPE_SECRET_KEY?.trim();
     const base = appUrl(req);
@@ -59,6 +80,16 @@ export async function POST(req: NextRequest) {
 
     const clientSessionId = generateSessionId();
     const timestamp = new Date().toISOString();
+
+    posthog.capture({
+      distinctId,
+      event: "checkout_started",
+      properties: {
+        product: "applytailor",
+        client_session: clientSessionId,
+        timestamp,
+      },
+    });
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -121,5 +152,7 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
+  } finally {
+    await posthog.shutdown();
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { usePostHog } from "posthog-js/react";
 
 type TailorResult = {
   mode: "openai" | "demo";
@@ -16,6 +17,7 @@ const PAYMENT_LINK =
   "https://buy.stripe.com/dRmaERaHe288a66bvweUU0b";
 
 export default function TailorForm() {
+  const posthog = usePostHog();
   const [jobUrl, setJobUrl] = useState("");
   const [resumeText, setResumeText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,6 +72,11 @@ export default function TailorForm() {
   }
 
   async function onUnlock() {
+    posthog?.capture("checkout_start", {
+      product: "applytailor",
+      location: "tailor_form",
+    });
+
     setPaying(true);
     setError(null);
     if (result) {
