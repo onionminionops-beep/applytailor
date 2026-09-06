@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { captureServer } from "@/lib/posthog-server";
 import Stripe from "stripe";
 
 export const runtime = "nodejs";
@@ -41,7 +42,8 @@ export async function POST(req: NextRequest) {
       console.warn(
         "STRIPE_SECRET_KEY not configured — falling back to Payment Link"
       );
-      return NextResponse.json({
+      await captureServer("anonymous", "checkout_started", { product: "ApplyTailor", mode: "payment_link" });
+    return NextResponse.json({
         url: PAYMENT_LINK,
         mode: "payment_link_fallback",
         message:
@@ -96,7 +98,8 @@ export async function POST(req: NextRequest) {
       clientSession: clientSessionId,
     });
 
-    return NextResponse.json({
+    await captureServer("anonymous", "checkout_started", { product: "ApplyTailor", mode: "checkout_session" });
+      return NextResponse.json({
       url: session.url,
       id: session.id,
       mode: "checkout_session",

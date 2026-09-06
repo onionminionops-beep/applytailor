@@ -1,5 +1,7 @@
 "use client";
 
+import PurchaseTracker from "@/app/components/PurchaseTracker";
+
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -69,7 +71,9 @@ function SuccessContent() {
   }, [sessionId]);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center gap-6 px-4 py-16">
+    <>
+      <PurchaseTracker product="ApplyTailor" />
+      <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center gap-6 px-4 py-16">
       <div className="rounded-2xl border border-[#1e2638] bg-[#101522]/90 p-8 text-center shadow-xl">
         {verifying ? (
           <>
@@ -132,6 +136,7 @@ function SuccessContent() {
         </p>
       )}
     </main>
+    </>
   );
 }
 
